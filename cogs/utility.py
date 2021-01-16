@@ -7,9 +7,9 @@ class utility(commands.Cog):
         self.client = client
 
     # Events
-    @commands.Cog.listener()
-    async def on_ready(self):
-        print("Bot is alive")
+    # @commands.Cog.listener()
+    # async def on_ready(self):
+    #     print("Bot is alive")
     
     # Commands
     @commands.command()

@@ -1,7 +1,7 @@
 import os
 import discord
 from dotenv import load_dotenv
-from discord.ext import commands
+from discord.ext import commands, tasks
 
 load_dotenv('.env')
 
@@ -20,7 +20,16 @@ async def unload(ctx, cog_extension):
 @client.command()
 async def reload(ctx, cog_extension):
     client.reload_extension(f'cogs.{cog_extension}')
-    await ctx.send(f'Cogs {cog_extension} has been reloaded')
+    await ctx.send(f'Cogs {cog_extension} has been reoaded')
+
+@client.event
+async def on_ready():
+    await client.change_presence(status = discord.Status.idle, activity = discord.Activity(type = discord.ActivityType.watching, name="Netflix"))
+
+@client.event
+async def on_error(ctx, error):
+    if isinstance(error, commands.CommandNotFound):
+        await ctx.send('Command does not exist.')
 
 for filename in os.listdir('./cogs'):
     if filename.endswith('.py'):

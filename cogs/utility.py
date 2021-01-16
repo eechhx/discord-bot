@@ -10,15 +10,21 @@ class utility(commands.Cog):
     # @commands.Cog.listener()
     # async def on_ready(self):
     #     print("Bot is alive")
-    
+
     # Commands
     @commands.command()
     async def ping(self, ctx):
         await ctx.send(f'{round(client.latency * 1000)}ms')
     
     @commands.command()
-    async def clear(self, ctx, amount = 10):
+    @commands.has_role('@admin')
+    async def clear(self, ctx, error, amount = 10):
         await ctx.channel.purge(limit = amount)
+    
+    @clear.error
+    async def clear_error(self, ctx, error):
+        if isinstance(error, commands.errors.MissingRole):
+            await ctx.send('Insufficient Role')
     
     @commands.command(aliases = ['8ball', 'eightball'])
     async def _8ball(self, ctx, *, question):

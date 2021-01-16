@@ -26,11 +26,6 @@ async def reload(ctx, cog_extension):
 async def on_ready():
     await client.change_presence(status = discord.Status.idle, activity = discord.Activity(type = discord.ActivityType.watching, name="Netflix"))
 
-@client.event
-async def on_error(ctx, error):
-    if isinstance(error, commands.CommandNotFound):
-        await ctx.send('Command does not exist.')
-
 for filename in os.listdir('./cogs'):
     if filename.endswith('.py'):
         client.load_extension(f'cogs.{filename[:-3]}')
